@@ -23,8 +23,16 @@ public:
 		email = _email;
 	}
 	
+	String getUsername() const {
+		return username;
+	}
+
 	void printUsername() const {
 		cout << "Name: " << username << endl;
 		cout << "Email: " << email << endl;
+	}
+
+	bool hasUsernameAndPassword(const String& _username, const String& _password) const {
+		return username == _username && password == _password;
 	}
 };
