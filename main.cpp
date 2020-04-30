@@ -21,22 +21,7 @@ using namespace std;
 int main()
 {
     TravellersApp travellersApp;
-    
-    cout << "Welcome!" << endl;
-    cout << "Enter 'help', if you want to see what you can do in this app" << endl;
-
-    String command;
-    while (1) {
-        cin >> command;
-
-        if (command == "registartion") {
-            travellersApp.registration();
-        }
-        else if (command == "login") {
-
-        }
-        else if (command == "logout") {
-
-        }
-    }
+    travellersApp.loadDataFromFiels();
+    travellersApp.run();
+    travellersApp.storeDataInFiels();
 }

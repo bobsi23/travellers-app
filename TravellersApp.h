@@ -22,7 +22,7 @@ public:
 		cin >> username >> password >> email;
 
 		for (int i = 0; i < users.getSize(); ++i) {
-			if (users[i].getUsername()==username) {
+			if (users[i].getUsername() == username) {
 				cout << "Username not available" << endl;
 				return;
 			}
@@ -55,4 +55,44 @@ public:
 	void logout() {
 		currentUser = nullptr;
 	}
-}
+
+	void help() {
+		
+	}
+
+	void run() {
+		cout << "Welcome!" << endl;
+		cout << "Enter 'help', if you want to see what you can do in this app" << endl;
+		cout << "Enter 'quit', if you want to see what you can do in this app" << endl;
+
+		String command;
+
+		while (1) {
+			cin >> command;
+
+			if (command == "registartion") {
+				registration();
+			}
+			else if (command == "login") {
+				login();
+			}
+			else if (command == "logout") {
+				logout();
+			}
+			else if (command == "help") {
+				help();
+			}
+			else if (command == "quit") {
+				break;
+			}
+		}
+	}
+
+	void loadDataFromFiels() {
+
+	}
+
+	void storeDataInFiels() {
+
+	}
+};
