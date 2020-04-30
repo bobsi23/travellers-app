@@ -60,7 +60,7 @@ public:
 		return size;
 	}
 
-	T operator[] (int i) {
+	T operator[] (int i) const {
 		return arr[i];
 	}
 };

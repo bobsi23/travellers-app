@@ -55,11 +55,46 @@ public:
 	void logout() {
 		currentUser = nullptr;
 	}
+	
+	void friend_request_send() {
+		if (currentUser == nullptr) {
+			cout << "User not logged in" << endl;
+		}
+		else {
+			String friendUsername;
+			cin >> friendUsername;
+			
+			for (int i = 0; i < users.getSize(); ++i) {
+				if (users[i].getUsername() == friendUsername) {
+					if (currentUser->hasFriend(friendUsername)) {
+						cout << "You're already friends" << endl;
+					}
+					else {
+						currentUser->addFriend(friendUsername);
+					}
+					return;
+				}
+			}
+			cout << "User not found" << endl;
+		}
+	}
 
 	void help() {
 		
 	}
 
+	/*
+		List of commands (by far):
+
+		help
+		registration
+		login
+		logout
+		friend_request
+		friend_accept
+		friend_decline
+		add_journey
+	*/
 	void run() {
 		cout << "Welcome!" << endl;
 		cout << "Enter 'help', if you want to see what you can do in this app" << endl;
@@ -79,12 +114,23 @@ public:
 			else if (command == "logout") {
 				logout();
 			}
+			else if (command == "friend_request_send") {
+				friend_request_send();
+			}
+			else if (command == "friend_accept") {
+
+			}
+			else if (command == "friend_decline") {
+
+			}
+			// ...
 			else if (command == "help") {
 				help();
 			}
 			else if (command == "quit") {
 				break;
 			}
+			
 		}
 	}
 

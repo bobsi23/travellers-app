@@ -9,6 +9,7 @@ class User {
 	String username;
 	String password;
 	String email;
+	DynArray<String> friendsList;
 
 public:
 	User() {
@@ -34,5 +35,18 @@ public:
 
 	bool hasUsernameAndPassword(const String& _username, const String& _password) const {
 		return username == _username && password == _password;
+	}
+
+	bool hasFriend(const String& friendUsername) const {
+		for (int i = 0; i < friendsList.getSize(); ++i) {
+			if (friendsList[i] == friendUsername) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void addFriend(const String& friendUsername) {
+		friendsList.addElement(friendUsername);
 	}
 };
