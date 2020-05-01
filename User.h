@@ -47,11 +47,21 @@ public:
 		return false;
 	}
 
+	bool hasWaitingFriend(const String& otherUsername) const {
+		for (int i = 0; i < waitingFriends.getSize(); ++i) {
+			if(waitingFriends[i] == otherUsername){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void addToWaiting(const String& otherUsername) {
 		waitingFriends.addElement(otherUsername);
 	}
 
 	void addFriend(const String& friendUsername) {
+		// TODO: Да махнем приятеля от чакащите
 		friendsList.addElement(friendUsername);
 	}
 };

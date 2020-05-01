@@ -90,7 +90,31 @@ public:
 	}
 
 	void friend_accept() {
-		
+		if (isLogged()) {
+			String friendUsername;
+			cin >> friendUsername;
+
+			for (int i = 0; i < users.getSize(); ++i) {
+				if (users[i].getUsername() == friendUsername) {
+					if (currentUser->hasFriend(friendUsername)) {
+						cout << "You're already friends" << endl;
+					}
+					else if (currentUser->hasWaitingFriend(friendUsername)) {
+						//това е така защото трябва да отразим промяната и в двата листа
+						currentUser->addFriend(friendUsername); 
+						users[i].addFriend(currentUser->getUsername());
+					}
+					else {
+						//Съобщение
+					}
+					return;
+				}
+			}
+			cout << "User not found" << endl;
+		}
+		else {
+			cout << "User not logged in" << endl;
+		}
 	}
 	
 	void friend_decline() {
