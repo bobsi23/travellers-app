@@ -8,6 +8,11 @@ class TravellersApp {
 	DynArray<User> users;
 	User* currentUser;		// Ако е nullptr, няма вписан потребител
 							// Ако има вписан потребител, сочи него
+
+	bool isLogged() const {
+		return currentUser != nullptr;
+	}
+
 public:
 	TravellersApp() {
 		users = DynArray<User>();
@@ -15,25 +20,33 @@ public:
 	}
 
 	void registration() {
-		String username;
-		String password;
-		String email;
-		cout << "Please enter username, password, email:" << endl;
-		cin >> username >> password >> email;
-
-		for (int i = 0; i < users.getSize(); ++i) {
-			if (users[i].getUsername() == username) {
-				cout << "Username not available" << endl;
-				return;
-			}
+		if (isLogged()) {
+			cout << "A user has already logged. Please logout and retry" << endl;
 		}
+		else {
+			String username;
+			String password;
+			String email;
+			cout << "Please enter username, password, email:" << endl;
+			cin >> username >> password >> email;
 
-		User newUser(username, password, email);
-		users.addElement(newUser);
+			for (int i = 0; i < users.getSize(); ++i) {
+				if (users[i].getUsername() == username) {
+					cout << "Username not available" << endl;
+					return;
+				}
+			}
+
+			User newUser(username, password, email);
+			users.addElement(newUser);
+		}
 	}
 
 	void login() {
-		if (currentUser == nullptr) {
+		if (isLogged()) {
+			cout << "A user has already logged. Please logout and retry" << endl;
+		}
+		else {
 			String username;
 			String password;
 			cout << "Enter username and password:" << endl;
@@ -47,9 +60,6 @@ public:
 			}
 			cout << "Unsuccessful login" << endl;
 		}
-		else {
-			cout << "A user has already logged. Please logout and retry" << endl;
-		}
 	}
 
 	void logout() {
@@ -57,26 +67,34 @@ public:
 	}
 	
 	void friend_request_send() {
-		if (currentUser == nullptr) {
-			cout << "User not logged in" << endl;
-		}
-		else {
+		if (isLogged()) {	
 			String friendUsername;
 			cin >> friendUsername;
-			
+
 			for (int i = 0; i < users.getSize(); ++i) {
 				if (users[i].getUsername() == friendUsername) {
 					if (currentUser->hasFriend(friendUsername)) {
 						cout << "You're already friends" << endl;
 					}
 					else {
-						currentUser->addFriend(friendUsername);
+						users[i].addToWaiting(currentUser->getUsername());
 					}
 					return;
 				}
 			}
 			cout << "User not found" << endl;
 		}
+		else {
+			cout << "User not logged in" << endl;
+		}
+	}
+
+	void friend_accept() {
+		
+	}
+	
+	void friend_decline() {
+
 	}
 
 	void help() {
@@ -118,10 +136,10 @@ public:
 				friend_request_send();
 			}
 			else if (command == "friend_accept") {
-
+				friend_accept();
 			}
 			else if (command == "friend_decline") {
-
+				friend_decline();
 			}
 			// ...
 			else if (command == "help") {
