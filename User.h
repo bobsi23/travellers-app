@@ -10,6 +10,7 @@ class User {
 	String password;
 	String email;
 	DynArray<String> friendsList;
+	DynArray<String> waitingFriends;
 
 public:
 	User() {
@@ -44,6 +45,10 @@ public:
 			}
 		}
 		return false;
+	}
+
+	void addToWaiting(const String& otherUsername) {
+		waitingFriends.addElement(otherUsername);
 	}
 
 	void addFriend(const String& friendUsername) {
