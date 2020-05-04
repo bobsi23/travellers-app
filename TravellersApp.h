@@ -149,6 +149,24 @@ public:
 		}
 	}
 
+	void friends_list() {
+		if (isLogged()) {
+			currentUser->printFriendsList();
+		}
+		else {
+			cout << "You're currently not logged in" << endl;
+		}
+	}
+
+	void waiting_list() {
+		if (isLogged()) {
+			currentUser->printWaitingList();
+		}
+		else {
+			cout << "You're currently not logged in" << endl;
+		}
+	}
+
 	void help() {
 		
 	}
@@ -193,6 +211,12 @@ public:
 			else if (command == "friend_decline") {
 				friend_decline();
 			}
+			else if (command == "friends_list") {
+				friends_list();
+			}
+			else if (command == "waiting_list") {
+				waiting_list();
+			}
 			// ...
 			else if (command == "help") {
 				help();
@@ -200,7 +224,7 @@ public:
 			else if (command == "quit") {
 				break;
 			}
-			
+			cout << endl;
 		}
 	}
 

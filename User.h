@@ -73,4 +73,16 @@ public:
 	void removeFromWaiting(const String& otherUsername) {
 		waitingFriends.removeElement(otherUsername);
 	}
+
+	void printFriendsList() const {
+		for (int i = 0; i < friendsList.getSize(); ++i) {
+			cout << friendsList[i] << endl;
+		}
+	}
+
+	void printWaitingList() const {
+		for (int i = 0; i < waitingFriends.getSize(); ++i) {
+			cout << waitingFriends[i] << endl;
+		}
+	}
 };
