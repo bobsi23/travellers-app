@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "String.h"
+#include "DynArray.h"
 using std::cin;
 using std::cout;
 using std::endl;
@@ -17,12 +18,16 @@ public:
 		username = "";
 		password = "";
 		email = "";
+		friendsList = {};
+		waitingFriends = {};
 	}
 
 	User(const String& _username, const String& _password, const String& _email) {
 		username = _username;
 		password = _password;
 		email = _email;
+		friendsList = {};
+		waitingFriends = {};
 	}
 	
 	String getUsername() const {
@@ -61,7 +66,7 @@ public:
 	}
 
 	void addFriend(const String& friendUsername) {
-		// TODO: Да махнем приятеля от чакащите
+		waitingFriends.removeElement(friendUsername);
 		friendsList.addElement(friendUsername);
 	}
 };
