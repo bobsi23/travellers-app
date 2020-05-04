@@ -76,6 +76,12 @@ public:
 					if (currentUser->hasFriend(friendUsername)) {
 						cout << "You're already friends" << endl;
 					}
+					else if (currentUser->hasWaitingFriend(friendUsername)) {
+						cout << "You're already in the waiting list of this user" << endl;
+					}
+					else if (users[i].hasWaitingFriend(currentUser->getUsername() )) {
+						cout << "Friend request has already been sent" << endl;
+					}
 					else {
 						users[i].addToWaiting(currentUser->getUsername());
 					}
@@ -105,7 +111,7 @@ public:
 						users[i].addFriend(currentUser->getUsername());
 					}
 					else {
-						//Съобщение
+						cout << "There is no friend request from this user. You cannot become friends yet" << endl;
 					}
 					return;
 				}
@@ -118,7 +124,29 @@ public:
 	}
 	
 	void friend_decline() {
+		if (isLogged()) {
+			String friendUsername;
+			cin >> friendUsername;
 
+			for (int i = 0; i < users.getSize(); ++i) {
+				if (users[i].getUsername() == friendUsername) {
+					if (currentUser->hasFriend(friendUsername)) {
+						cout << "You're already friends. You cannot decline this request" << endl;
+					}
+					else if (currentUser->hasWaitingFriend(friendUsername)) {
+						currentUser->removeFromWaiting(friendUsername);
+					}
+					else {
+						cout << "There is no friend request from this user" << endl;
+					}
+					return;
+				}
+			}
+			cout << "User not found" << endl;
+		}
+		else {
+			cout << "User not logged in" << endl;
+		}
 	}
 
 	void help() {

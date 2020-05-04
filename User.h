@@ -34,7 +34,7 @@ public:
 		return username;
 	}
 
-	void printUsername() const {
+	void printUserInfo() const {
 		cout << "Name: " << username << endl;
 		cout << "Email: " << email << endl;
 	}
@@ -68,5 +68,9 @@ public:
 	void addFriend(const String& friendUsername) {
 		waitingFriends.removeElement(friendUsername);
 		friendsList.addElement(friendUsername);
+	}
+
+	void removeFromWaiting(const String& otherUsername) {
+		waitingFriends.removeElement(otherUsername);
 	}
 };
