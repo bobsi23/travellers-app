@@ -1,5 +1,4 @@
 #pragma once
-#include "User.h"
 
 template <typename T>
 class DynArray {
@@ -54,6 +53,16 @@ public:
 		}
 		arr[size] = newElement;
 		++size;
+	}
+
+	void removeElement(const T& element) {
+		for (int i = 0; i < size; ++i) {
+			if (arr[i] == element) {
+				for (int j = i; j < size - 1; ++j) {
+					arr[j] = arr[j + 1];
+				}
+			}
+		}
 	}
 
 	int getSize() const {
