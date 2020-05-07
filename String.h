@@ -23,7 +23,6 @@ public:
 	}
 
 	String(const String& other) {
-
 		arr = new char[strlen(other.arr) + 1];
 		copyString(arr, other.arr);
 	}
