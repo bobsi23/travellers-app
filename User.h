@@ -2,6 +2,7 @@
 #include <iostream>
 #include "String.h"
 #include "DynArray.h"
+#include "Journey.h"
 using std::cin;
 using std::cout;
 using std::endl;
@@ -12,6 +13,7 @@ class User {
 	String email;
 	DynArray<String> friendsList;
 	DynArray<String> waitingFriends;
+	DynArray<Journey> journeyList;
 
 public:
 	User() {
@@ -84,5 +86,9 @@ public:
 		for (int i = 0; i < waitingFriends.getSize(); ++i) {
 			cout << waitingFriends[i] << endl;
 		}
+	}
+
+	void addJourney(const Journey& newJourney) {
+		journeyList.addElement(newJourney);
 	}
 };
