@@ -150,7 +150,7 @@ public:
 		}
 	}
 
-	void friendsList() {
+	void friendsList() const {
 		if (isLogged()) {
 			currentUser->printFriendsList();
 		}
@@ -159,7 +159,7 @@ public:
 		}
 	}
 
-	void waitingList() {
+	void waitingList() const {
 		if (isLogged()) {
 			currentUser->printWaitingList();
 		}
@@ -168,13 +168,27 @@ public:
 		}
 	}
 
-	void add_journey() {
-		Journey journey;
-		journey.readJourney();
-		currentUser->addJourney(journey);
+	void addJourney() {
+		if (isLogged()) {
+			Journey journey;
+			journey.readJourney();
+			currentUser->addJourney(journey);
+		}
+		else {
+			cout << "User not logged in" << endl;
+		}
+	}
+	
+	void journeyList() const {
+		if (isLogged()) {
+			currentUser->printJourneyList();
+		}
+		else {
+			cout << "User not logged in" << endl;
+		}
 	}
 
-	void help() {
+	void help() const {
 		
 	}
 
@@ -226,6 +240,9 @@ public:
 			else if (command == "waiting_list") {
 				waitingList();
 			}
+			else if (command == "journey_list") {
+				journeyList();
+			}
 			// ...
 			else if (command == "help") {
 				help();
@@ -240,11 +257,11 @@ public:
 		}
 	}
 
-	void loadDataFromFiels() {
+	void loadDataFromFiles() {
 
 	}
 
-	void storeDataInFiels() {
+	void storeDataInFiles() const {
 
 	}
 };

@@ -20,7 +20,7 @@ public:
 		cin >> destination;
 		cout << "Enter start date (YYYY-MM-DD):" << endl;
 		cin >> dateFrom;
-		cout << "Enter end date (YYYY-MM-DD):" << endl;
+		cout << "Enter final date (YYYY-MM-DD):" << endl;
 		cin >> dateTo;
 		cout << "Enter your grade:" << endl;
 		cin >> grade;
@@ -34,6 +34,18 @@ public:
 			String photo;
 			cin >> photo;
 			photos.addElement(photo);
+		}
+	}
+
+	void printJourney() const {
+		cout << "Destionation: " << destination << endl;
+		cout << "Start date: " << dateFrom << endl;
+		cout << "Final date: " << dateTo << endl;
+		cout << "Grade: " << grade << endl;
+		cout << "Comment: " << endl << comment << endl;
+		cout << "Photos: " << endl;
+		for (int i = 0; i < photos.getSize(); ++i) {
+			cout << photos[i] << endl;
 		}
 	}
 };

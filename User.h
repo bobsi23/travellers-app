@@ -32,6 +32,7 @@ public:
 		waitingFriends = {};
 	}
 	
+
 	String getUsername() const {
 		return username;
 	}
@@ -44,6 +45,7 @@ public:
 	bool hasUsernameAndPassword(const String& _username, const String& _password) const {
 		return username == _username && password == _password;
 	}
+
 
 	bool hasFriend(const String& friendUsername) const {
 		for (int i = 0; i < friendsList.getSize(); ++i) {
@@ -63,18 +65,25 @@ public:
 		return false;
 	}
 
-	void addToWaiting(const String& otherUsername) {
-		waitingFriends.addElement(otherUsername);
-	}
 
 	void addFriend(const String& friendUsername) {
 		waitingFriends.removeElement(friendUsername);
 		friendsList.addElement(friendUsername);
 	}
 
+	void addToWaiting(const String& otherUsername) {
+		waitingFriends.addElement(otherUsername);
+	}
+
+	void addJourney(const Journey& newJourney) {
+		journeyList.addElement(newJourney);
+	}
+
+
 	void removeFromWaiting(const String& otherUsername) {
 		waitingFriends.removeElement(otherUsername);
 	}
+
 
 	void printFriendsList() const {
 		for (int i = 0; i < friendsList.getSize(); ++i) {
@@ -88,7 +97,10 @@ public:
 		}
 	}
 
-	void addJourney(const Journey& newJourney) {
-		journeyList.addElement(newJourney);
+	void printJourneyList() {
+		for (int i = 0; i < journeyList.getSize(); ++i) {
+			journeyList[i].printJourney();
+		}
+
 	}
 };
