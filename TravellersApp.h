@@ -66,7 +66,7 @@ public:
 		currentUser = nullptr;
 	}
 	
-	void friend_request_send() {
+	void friendRequestSend() {
 		if (isLogged()) {	
 			String friendUsername;
 			cin >> friendUsername;
@@ -83,6 +83,7 @@ public:
 						cout << "Friend request has already been sent" << endl;
 					}
 					else {
+						cout << "Adding you to waiting list of friend..." << endl;
 						users[i].addToWaiting(currentUser->getUsername());
 					}
 					return;
@@ -95,7 +96,7 @@ public:
 		}
 	}
 
-	void friend_accept() {
+	void friendAccept() {
 		if (isLogged()) {
 			String friendUsername;
 			cin >> friendUsername;
@@ -123,7 +124,7 @@ public:
 		}
 	}
 	
-	void friend_decline() {
+	void friendDecline() {
 		if (isLogged()) {
 			String friendUsername;
 			cin >> friendUsername;
@@ -149,7 +150,7 @@ public:
 		}
 	}
 
-	void friends_list() {
+	void friendsList() {
 		if (isLogged()) {
 			currentUser->printFriendsList();
 		}
@@ -158,7 +159,7 @@ public:
 		}
 	}
 
-	void waiting_list() {
+	void waitingList() {
 		if (isLogged()) {
 			currentUser->printWaitingList();
 		}
@@ -167,9 +168,17 @@ public:
 		}
 	}
 
+	void add_journey() {
+		Journey journey;
+		journey.readJourney();
+		currentUser->addJourney(journey);
+	}
+
 	void help() {
 		
 	}
+
+	
 
 	/*
 		List of commands (by far):
@@ -193,7 +202,7 @@ public:
 		while (1) {
 			cin >> command;
 
-			if (command == "registartion") {
+			if (command == "registration") {
 				registration();
 			}
 			else if (command == "login") {
@@ -203,19 +212,19 @@ public:
 				logout();
 			}
 			else if (command == "friend_request_send") {
-				friend_request_send();
+				friendRequestSend();
 			}
 			else if (command == "friend_accept") {
-				friend_accept();
+				friendAccept();
 			}
 			else if (command == "friend_decline") {
-				friend_decline();
+				friendDecline();
 			}
 			else if (command == "friends_list") {
-				friends_list();
+				friendsList();
 			}
 			else if (command == "waiting_list") {
-				waiting_list();
+				waitingList();
 			}
 			// ...
 			else if (command == "help") {
@@ -223,6 +232,9 @@ public:
 			}
 			else if (command == "quit") {
 				break;
+			}
+			else {
+				cout << "There is no command: " << command << endl;
 			}
 			cout << endl;
 		}
