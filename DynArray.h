@@ -61,6 +61,7 @@ public:
 				for (int j = i; j < size - 1; ++j) {
 					arr[j] = arr[j + 1];
 				}
+				--size;
 			}
 		}
 	}
