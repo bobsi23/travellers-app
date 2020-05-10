@@ -72,4 +72,8 @@ public:
 	T operator[] (int i) const {
 		return arr[i];
 	}
+
+	T& operator[] (int i) {
+		return arr[i];
+	}
 };
