@@ -53,7 +53,7 @@ public:
 			cin >> username >> password;
 			for (int i = 0; i < users.getSize(); ++i) {
 				if (users[i].hasUsernameAndPassword(username, password)) {
-					currentUser = &users[i];
+					currentUser = &(users[i]);
 					cout << "Login was successful" << endl;
 					return;
 				}
@@ -168,6 +168,15 @@ public:
 		}
 	}
 
+	void journeyList() const {
+		if (isLogged()) {
+			currentUser->printJourneyList();
+		}
+		else {
+			cout << "User not logged in" << endl;
+		}
+	}
+
 	void addJourney() {
 		if (isLogged()) {
 			Journey journey;
@@ -178,21 +187,10 @@ public:
 			cout << "User not logged in" << endl;
 		}
 	}
-	
-	void journeyList() const {
-		if (isLogged()) {
-			currentUser->printJourneyList();
-		}
-		else {
-			cout << "User not logged in" << endl;
-		}
-	}
 
 	void help() const {
 		
 	}
-
-	
 
 	/*
 		List of commands (by far):
@@ -242,6 +240,9 @@ public:
 			}
 			else if (command == "journey_list") {
 				journeyList();
+			}
+			else if (command == "add_journey") {
+				addJourney();
 			}
 			// ...
 			else if (command == "help") {

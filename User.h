@@ -20,16 +20,18 @@ public:
 		username = "";
 		password = "";
 		email = "";
-		friendsList = {};
-		waitingFriends = {};
+		friendsList = DynArray<String>();
+		waitingFriends = DynArray<String>();
+		journeyList = DynArray<Journey>();
 	}
 
 	User(const String& _username, const String& _password, const String& _email) {
 		username = _username;
 		password = _password;
 		email = _email;
-		friendsList = {};
-		waitingFriends = {};
+		friendsList = DynArray<String>();
+		waitingFriends = DynArray<String>();
+		journeyList = DynArray<Journey>();
 	}
 	
 

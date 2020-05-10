@@ -25,6 +25,8 @@ public:
 		cout << "Enter your grade:" << endl;
 		cin >> grade;
 
+		// Read comment
+		
 		cout << "How many photos do you want to upload?" << endl;
 		int numberOfPhotos;
 		cin >> numberOfPhotos;

@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
     TravellersApp travellersApp;
-    travellersApp.loadDataFromFiels();
+    travellersApp.loadDataFromFiles();
     travellersApp.run();
-    travellersApp.storeDataInFiels();
+    travellersApp.storeDataInFiles();
 }
