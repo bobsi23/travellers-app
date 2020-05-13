@@ -67,6 +67,28 @@ public:
 	const char* getArr() const {
 		return arr;
 	}
+
+	String operator+(const String& right) const {
+		String result;
+
+		int leftLength = strlen(arr);
+		int rightLength = strlen(right.arr);
+
+		int capacity = leftLength + rightLength + 1;
+		result.arr = new char[capacity];
+
+		for (int i = 0; i < leftLength; ++i) {
+			result.arr[i] = arr[i];
+		}
+		
+		for (int i = 0; i < rightLength; ++i) {
+			result.arr[i + leftLength] = right.arr[i];
+		}
+
+		result.arr[leftLength + rightLength] = '\0';
+
+		return result;
+	}
 };
 
 istream& operator>>(istream& in, String& str) {
