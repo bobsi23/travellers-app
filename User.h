@@ -39,11 +39,6 @@ public:
 		return username;
 	}
 
-	void printUserInfo() const {
-		cout << "Name: " << username << endl;
-		cout << "Email: " << email << endl;
-	}
-
 	bool hasUsernameAndPassword(const String& _username, const String& _password) const {
 		return username == _username && password == _password;
 	}
@@ -87,6 +82,11 @@ public:
 	}
 
 
+	void printUserInfo() const {
+		cout << "Name: " << username << endl;
+		cout << "Email: " << email << endl;
+	}
+
 	void printFriendsList() const {
 		for (int i = 0; i < friendsList.getSize(); ++i) {
 			cout << friendsList[i] << endl;
@@ -105,4 +105,15 @@ public:
 		}
 
 	}
+
+	
+	void sentToOstream(ostream& out) const {
+		out << username << " " << password << " " << email << endl;
+	}
 };
+
+
+ostream& operator<<(ostream& out, const User& user) {
+	user.sentToOstream(out);
+	return out;
+}
