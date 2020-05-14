@@ -25,7 +25,7 @@ public:
 		cout << "Enter your grade:" << endl;
 		cin >> grade;
 
-		// Read comment
+		// TODO: Read the comment too
 		
 		cout << "How many photos do you want to upload?" << endl;
 		int numberOfPhotos;
@@ -50,4 +50,23 @@ public:
 			cout << photos[i] << endl;
 		}
 	}
+
+	void sentToOstream(ostream& out) const {
+		out << destination << endl
+			<< dateFrom << endl
+			<< dateTo << endl
+			<< grade << endl
+			<< comment << endl
+			<< "END_OF_COMMENT" << endl
+			<< photos.getSize() << endl;
+		
+		for (int i = 0; i < photos.getSize(); ++i) {
+			out << photos[i] << endl;
+		}
+	}
 };
+
+ostream& operator<<(ostream& out, const Journey& journey) {
+	journey.sentToOstream(out);
+	return out;
+}
