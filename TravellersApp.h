@@ -1,8 +1,10 @@
 #pragma once
 #include<iostream>
+#include<fstream>
 #include "User.h"
 #include "DynArray.h"
 using std::cin;
+using std::ofstream;
 
 class TravellersApp {
 	DynArray<User> users;
@@ -18,7 +20,7 @@ public:
 		users = DynArray<User>();
 		currentUser = nullptr;
 	}
-
+	
 	void registration() {
 		if (isLogged()) {
 			cout << "A user has already logged. Please logout and retry" << endl;
@@ -263,6 +265,25 @@ public:
 	}
 
 	void storeDataInFiles() const {
+		ofstream out;
+		out.open("users.db");
 
+		for (int i = 0; i < users.getSize(); ++i) {
+			out << users[i];
+		}
+
+		out.close();
+
+		for (int i = 0; i < users.getSize(); ++i) {
+			String fileName = users[i].getUsername() + ".db";
+
+			out.open(fileName.getArr());
+
+			users[i].getJourneyList();
+
+			for (int j = 0; j < users[i].getJourneyList().getSize(); ++j) {
+				out << users[i].getJourneyList()[j];
+			}
+		}
 	}
 };
