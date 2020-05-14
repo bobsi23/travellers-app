@@ -34,6 +34,12 @@ public:
 		journeyList = DynArray<Journey>();
 	}
 	
+	// Връщаме референция, за да не копираме journeyList
+	// Тя е const, за да не можем да го променяме извън класа User
+	const DynArray<Journey>& getJourneyList() const {
+		return journeyList;
+	}
+
 
 	String getUsername() const {
 		return username;
