@@ -24,8 +24,12 @@ public:
 		cin >> dateTo;
 		cout << "Enter your grade:" << endl;
 		cin >> grade;
-
-		// TODO: Read the comment too
+		
+		cout << "Enter your comment (1 line, max 255 characters):" << endl;
+		char commentArray[256];
+		cin.ignore();						// Ignore one newline character
+		cin.getline(commentArray, 255);
+		comment = commentArray;
 		
 		cout << "How many photos do you want to upload?" << endl;
 		int numberOfPhotos;
@@ -51,22 +55,46 @@ public:
 		}
 	}
 
-	void sentToOstream(ostream& out) const {
-		out << destination << endl
-			<< dateFrom << endl
-			<< dateTo << endl
-			<< grade << endl
-			<< comment << endl
-			<< "END_OF_COMMENT" << endl
-			<< photos.getSize() << endl;
-		
-		for (int i = 0; i < photos.getSize(); ++i) {
-			out << photos[i] << endl;
-		}
-	}
+	friend ostream& operator<<(ostream& out, const Journey& journey);
+	friend istream& operator>>(istream& in, Journey& journey);
 };
 
 ostream& operator<<(ostream& out, const Journey& journey) {
-	journey.sentToOstream(out);
+	out << journey.destination << endl
+		<< journey.dateFrom << endl
+		<< journey.dateTo << endl
+		<< journey.grade << endl
+		<< journey.comment << endl
+		<< "END_OF_COMMENT" << endl
+		<< journey.photos.getSize() << endl;
+
+	for (int i = 0; i < journey.photos.getSize(); ++i) {
+		out << journey.photos[i] << endl;
+	}
 	return out;
+}
+
+istream& operator>>(istream& in, Journey& journey) {
+	in >> journey.destination
+		>> journey.dateFrom
+		>> journey.dateTo
+		>> journey.grade;
+	
+	String word;
+	in >> word;
+
+	while (word != "END_OF_COMMENT") {
+		journey.comment = journey.comment + word + " ";
+		in >> word;
+	}
+
+	int numberOfPhotos;
+	in >> numberOfPhotos;
+	for (int i = 0; i < numberOfPhotos; ++i) {
+		String photo;
+		in >> photo;
+		journey.photos.addElement(photo);
+	}
+
+	return in;
 }
