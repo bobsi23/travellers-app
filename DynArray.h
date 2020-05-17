@@ -66,6 +66,10 @@ public:
 		}
 	}
 
+	void removeLastElement() {
+		--size;
+	}
+
 	int getSize() const {
 		return size;
 	}
