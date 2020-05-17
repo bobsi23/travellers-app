@@ -33,11 +33,30 @@ public:
 		waitingFriends = DynArray<String>();
 		journeyList = DynArray<Journey>();
 	}
+
 	
-	// Връщаме референция, за да не копираме journeyList
-	// Тя е const, за да не можем да го променяме извън класа User
-	const DynArray<Journey>& getJourneyList() const {
-		return journeyList;
+	String getFriend(int i) const {
+		return friendsList[i];
+	}
+
+	int getNumberOfFriends() const {
+		return friendsList.getSize();
+	}
+
+	String getWaitingFriend(int i) const {
+		return waitingFriends[i];
+	}
+
+	int getNumberOfWaitingFriends() const {
+		return waitingFriends.getSize();
+	}
+
+	Journey getJourney(int i) const {
+		return journeyList[i];
+	}
+
+	int getNumberOfJourneys() const {
+		return journeyList.getSize();
 	}
 
 
