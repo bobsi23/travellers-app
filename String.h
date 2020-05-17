@@ -44,6 +44,10 @@ public:
 		return equal(arr, other.arr);
 	}
 
+	bool operator !=(const String& other) const {
+		return !equal(arr, other.arr);
+	}
+
 	bool isNumber() const {
 		for (int i = 0; arr[i] != '\0'; ++i) {
 			if (!isDigit(arr[i])) {
