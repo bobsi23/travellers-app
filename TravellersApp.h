@@ -4,6 +4,7 @@
 #include "User.h"
 #include "DynArray.h"
 using std::cin;
+using std::ifstream;
 using std::ofstream;
 
 class TravellersApp {
@@ -209,7 +210,7 @@ public:
 	void run() {
 		cout << "Welcome!" << endl;
 		cout << "Enter 'help', if you want to see what you can do in this app" << endl;
-		cout << "Enter 'quit', if you want to see what you can do in this app" << endl;
+		cout << "Enter 'quit', if you want to quit" << endl;
 
 		String command;
 
@@ -261,7 +262,55 @@ public:
 	}
 
 	void loadDataFromFiles() {
+		ifstream in;
+		in.open("users.db");
 
+		if(in.good()){
+			String username;
+			String password;
+			String email;
+
+			while (!in.eof()) {
+				in >> username >> password >> email;
+				User user(username, password, email);
+				users.addElement(user);
+			}
+			users.removeLastElement();
+			in.close();
+			
+			for (int i = 0; i < users.getSize(); ++i) {
+				String fileName = users[i].getUsername() + ".db";
+				in.open(fileName.getArr());
+
+				if (in.good()) {
+					int numberOfFriends;
+					in >> numberOfFriends;
+					for (int j = 0; j < numberOfFriends; ++j) {
+						String friendUsername;
+						in >> friendUsername;
+						users[i].addFriend(friendUsername);
+					}
+
+					int waitingFriends;
+					in >> waitingFriends;
+					for (int k = 0; k < waitingFriends; ++k) {
+						String waitingFriend;
+						in >> waitingFriend;
+						users[i].addToWaiting(waitingFriend);
+					}
+
+					int numberOfJourneys;
+					in >> numberOfJourneys;
+					for (int p = 0; p < numberOfJourneys; ++p) {
+						Journey journey;
+						in >> journey;
+						users[i].addJourney(journey);
+					}
+				}
+
+				in.close();
+			}
+		}
 	}
 
 	void storeDataInFiles() const {
@@ -279,11 +328,22 @@ public:
 
 			out.open(fileName.getArr());
 
-			users[i].getJourneyList();
-
-			for (int j = 0; j < users[i].getJourneyList().getSize(); ++j) {
-				out << users[i].getJourneyList()[j];
+			out << users[i].getNumberOfFriends() << endl;
+			for (int j = 0; j < users[i].getNumberOfFriends(); ++j) {
+				out << users[i].getFriend(j) << endl;
 			}
+
+			out << users[i].getNumberOfWaitingFriends() << endl;
+			for (int k = 0; k < users[i].getNumberOfWaitingFriends(); ++k) {
+				out << users[i].getWaitingFriend(k) << endl;
+			}
+
+			out << users[i].getNumberOfJourneys() << endl;
+			for (int p = 0; p < users[i].getNumberOfJourneys(); ++p) {
+				out << users[i].getJourney(p);
+			}
+
+			out.close();
 		}
 	}
 };
