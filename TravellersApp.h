@@ -38,6 +38,7 @@ public:
 	TravellersApp() {
 		users = DynArray<User>();
 		currentUser = nullptr;
+		destinations = DynArray<String>();
 	}
 	
 	void registration() {
@@ -190,6 +191,13 @@ public:
 			Journey journey;
 			journey.readJourney();
 			currentUser->addJourney(journey);
+
+			for (int i = 0; i < destinations.getSize(); ++i) {
+				if (destinations[i] == journey.getDestination()) {
+					return;
+				}
+			}
+			destinations.addElement(journey.getDestination());
 		}
 		else {
 			cout << "User not logged in" << endl;
@@ -279,7 +287,7 @@ public:
 				seeWall();
 			}
 			else if (command == "destinations_list") {
-				destinationsList()
+				destinationsList();
 			}
 			// ...
 			else if (command == "help") {
@@ -345,6 +353,17 @@ public:
 				in.close();
 			}
 		}
+
+		in.open("destinaions.db");
+		if (in.good()) {
+			String destination;
+			while (!in.eof()) {
+				in >> destination;
+				destinations.addElement(destination);
+			}
+			destinations.removeLastElement();
+			in.close();
+		}
 	}
 
 	void storeDataInFiles() const {
@@ -379,5 +398,13 @@ public:
 
 			out.close();
 		}
+
+		out.open("destinations.db");
+
+		for (int i = 0; i < destinations.getSize(); ++i) {
+			out << destinations[i] << endl;
+		}
+
+		out.close();
 	}
 };

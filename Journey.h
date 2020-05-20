@@ -15,6 +15,10 @@ class Journey {
 	DynArray<String> photos;
 
 public:
+	String getDestination() const {
+		return destination;
+	}
+
 	void readJourney() {
 		cout << "Enter your destination:" << endl;
 		cin >> destination;
