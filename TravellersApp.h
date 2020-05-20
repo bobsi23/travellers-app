@@ -16,6 +16,24 @@ class TravellersApp {
 		return currentUser != nullptr;
 	}
 
+	User* findUserByUsername(const String& username) const {
+		for (int i = 0; i < users.getSize(); ++i) {
+			if (users[i].getUsername() == username) {
+				return &(users[i]);
+			}
+		}
+		return nullptr;
+	}
+
+	User* findUserByUsername(const String& username) {
+		for (int i = 0; i < users.getSize(); ++i) {
+			if (users[i].getUsername() == username) {
+				return &(users[i]);
+			}
+		}
+		return nullptr;
+	}
+
 public:
 	TravellersApp() {
 		users = DynArray<User>();
@@ -33,15 +51,13 @@ public:
 			cout << "Please enter username, password, email:" << endl;
 			cin >> username >> password >> email;
 
-			for (int i = 0; i < users.getSize(); ++i) {
-				if (users[i].getUsername() == username) {
-					cout << "Username not available" << endl;
-					return;
-				}
+			if (findUserByUsername(username) == nullptr) {
+				User newUser(username, password, email);
+				users.addElement(newUser);
 			}
-
-			User newUser(username, password, email);
-			users.addElement(newUser);
+			else {
+				cout << "Username not available" << endl;
+			}	
 		}
 	}
 
@@ -74,25 +90,26 @@ public:
 			String friendUsername;
 			cin >> friendUsername;
 
-			for (int i = 0; i < users.getSize(); ++i) {
-				if (users[i].getUsername() == friendUsername) {
-					if (currentUser->hasFriend(friendUsername)) {
-						cout << "You're already friends" << endl;
-					}
-					else if (currentUser->hasWaitingFriend(friendUsername)) {
-						cout << "You're already in the waiting list of this user" << endl;
-					}
-					else if (users[i].hasWaitingFriend(currentUser->getUsername() )) {
-						cout << "Friend request has already been sent" << endl;
-					}
-					else {
-						cout << "Adding you to waiting list of friend..." << endl;
-						users[i].addToWaiting(currentUser->getUsername());
-					}
-					return;
+			User* futureFriend = findUserByUsername(friendUsername);
+
+			if (futureFriend == nullptr) {
+				cout << "Friend user not found" << endl;
+			}
+			else {
+				if (currentUser->hasFriend(friendUsername)) {
+					cout << "You're already friends" << endl;
+				}
+				else if (currentUser->hasWaitingFriend(friendUsername)) {
+					cout << "You're already in the waiting list of this user" << endl;
+				}
+				else if (futureFriend->hasWaitingFriend(currentUser->getUsername())) {
+					cout << "Friend request has already been sent" << endl;
+				}
+				else {
+					cout << "Adding you to waiting list of friend..." << endl;
+					futureFriend->addToWaiting(currentUser->getUsername());
 				}
 			}
-			cout << "User not found" << endl;
 		}
 		else {
 			cout << "User not logged in" << endl;
@@ -104,23 +121,17 @@ public:
 			String friendUsername;
 			cin >> friendUsername;
 
-			for (int i = 0; i < users.getSize(); ++i) {
-				if (users[i].getUsername() == friendUsername) {
-					if (currentUser->hasFriend(friendUsername)) {
-						cout << "You're already friends" << endl;
-					}
-					else if (currentUser->hasWaitingFriend(friendUsername)) {
-						//това е така защото трябва да отразим промяната и в двата листа
-						currentUser->addFriend(friendUsername); 
-						users[i].addFriend(currentUser->getUsername());
-					}
-					else {
-						cout << "There is no friend request from this user. You cannot become friends yet" << endl;
-					}
-					return;
-				}
+			if (currentUser->hasFriend(friendUsername)) {
+				cout << "You're already friends" << endl;
 			}
-			cout << "User not found" << endl;
+			else if (currentUser->hasWaitingFriend(friendUsername)) {
+				//това е така защото трябва да отразим промяната и в двата листа
+				currentUser->addFriend(friendUsername);
+				findUserByUsername(friendUsername)->addFriend(currentUser->getUsername());
+			}
+			else {
+				cout << "There is no friend request from this user. You cannot become friends yet" << endl;
+			}
 		}
 		else {
 			cout << "User not logged in" << endl;
@@ -132,21 +143,15 @@ public:
 			String friendUsername;
 			cin >> friendUsername;
 
-			for (int i = 0; i < users.getSize(); ++i) {
-				if (users[i].getUsername() == friendUsername) {
-					if (currentUser->hasFriend(friendUsername)) {
-						cout << "You're already friends. You cannot decline this request" << endl;
-					}
-					else if (currentUser->hasWaitingFriend(friendUsername)) {
-						currentUser->removeFromWaiting(friendUsername);
-					}
-					else {
-						cout << "There is no friend request from this user" << endl;
-					}
-					return;
-				}
+			if (currentUser->hasFriend(friendUsername)) {
+				cout << "You're already friends. You cannot decline this request" << endl;
 			}
-			cout << "User not found" << endl;
+			else if (currentUser->hasWaitingFriend(friendUsername)) {
+				currentUser->removeFromWaiting(friendUsername);
+			}
+			else {
+				cout << "There is no friend request from this user" << endl;
+			}
 		}
 		else {
 			cout << "User not logged in" << endl;
@@ -185,6 +190,23 @@ public:
 			Journey journey;
 			journey.readJourney();
 			currentUser->addJourney(journey);
+		}
+		else {
+			cout << "User not logged in" << endl;
+		}
+	}
+
+	void seeWall() const{
+		if (isLogged()) {
+			String friendName;
+			cin >> friendName;
+
+			if (currentUser->hasFriend(friendName)) {
+				findUserByUsername(friendName)->printJourneyList();
+			}
+			else {
+				cout << "Friend not found" << endl;
+			}
 		}
 		else {
 			cout << "User not logged in" << endl;
@@ -246,6 +268,9 @@ public:
 			}
 			else if (command == "add_journey") {
 				addJourney();
+			}
+			else if (command == "see_wall") {
+				seeWall();
 			}
 			// ...
 			else if (command == "help") {
