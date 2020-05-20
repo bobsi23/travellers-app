@@ -9,8 +9,8 @@ using std::ofstream;
 
 class TravellersApp {
 	DynArray<User> users;
-	User* currentUser;		// Ако е nullptr, няма вписан потребител
-							// Ако има вписан потребител, сочи него
+	User* currentUser;	
+	DynArray<String> destinations;
 
 	bool isLogged() const {
 		return currentUser != nullptr;
@@ -213,6 +213,12 @@ public:
 		}
 	}
 
+	void destinationsList() {
+		for (int i = 0; i < destinations.getSize(); ++i) {
+			cout << destinations[i] << endl;
+		}
+	}
+
 	void help() const {
 		
 	}
@@ -271,6 +277,9 @@ public:
 			}
 			else if (command == "see_wall") {
 				seeWall();
+			}
+			else if (command == "destinations_list") {
+				destinationsList()
 			}
 			// ...
 			else if (command == "help") {
