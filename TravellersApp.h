@@ -227,8 +227,46 @@ public:
 		}
 	}
 
+	void destinationInfo() {
+		String destination;
+		cin >> destination;
+
+		if (destinations.hasElement(destination)) {
+			int numberOfGrades = 0;
+			double gradeSum = 0;
+			
+			for (int i = 0; i < users.getSize(); ++i) {
+				Journey* journey = users[i].findJourneyByDestination(destination);
+				if (journey != nullptr) {
+					cout << journey->getComment() << endl;
+					cout << journey->getGrade() << endl;
+					++numberOfGrades;
+					gradeSum = gradeSum + journey->getGrade();
+				}
+			}
+
+			cout << "Avarage grade: " << gradeSum/numberOfGrades << endl;
+		}
+		else {
+			cout << "There is no such destination" << endl;
+		}
+	}
+
 	void help() const {
-		
+		cout << "  Enter 'registration'        if you want to register" << endl;
+		cout << "  Enter 'login'               if you want to login" << endl;
+		cout << "  Enter 'logout'              if you want to logout" << endl;
+		cout << "  Enter 'friend_request_send' if you want to send a friend-request" << endl;
+		cout << "  Enter 'friend_accept'       if you want to accept a friend-request" << endl;
+		cout << "  Enter 'friend_decline'      if you want to decline a friend-request" << endl;
+		cout << "  Enter 'friends_list'        if you want to see your friends list" << endl;
+		cout << "  Enter 'waiting_list'        if you want to see your waiting friends" << endl;
+		cout << "  Enter 'journey_list'        if you want to see your journey list" << endl;
+		cout << "  Enter 'add_journey'         if you want to add journey" << endl;
+		cout << "  Enter 'see_wall'            if you want to see your friend's journeys" << endl;
+		cout << "  Enter 'destinations_list'   if you want to see all destinations" << endl;
+		cout << "  Enter 'destination_info'    if you want to get information about a destination" << endl;
+		cout << "  Enter 'quit'                if you want to quit" << endl;
 	}
 
 	/*
@@ -245,8 +283,8 @@ public:
 	*/
 	void run() {
 		cout << "Welcome!" << endl;
-		cout << "Enter 'help', if you want to see what you can do in this app" << endl;
-		cout << "Enter 'quit', if you want to quit" << endl;
+		cout << "Enter 'help' if you want to see what you can do in this app" << endl;
+		cout << "Enter 'quit' if you want to quit" << endl;
 
 		String command;
 
@@ -288,6 +326,9 @@ public:
 			}
 			else if (command == "destinations_list") {
 				destinationsList();
+			}
+			else if (command == "destination_info") {
+				destinationInfo();
 			}
 			// ...
 			else if (command == "help") {
