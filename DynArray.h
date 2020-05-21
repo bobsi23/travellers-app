@@ -74,6 +74,15 @@ public:
 		return size;
 	}
 
+	bool hasElement(const T& element) const {
+		for (int i = 0; i < size; ++i) {
+			if (arr[i] == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	T operator[] (int i) const {
 		return arr[i];
 	}
