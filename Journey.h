@@ -19,6 +19,14 @@ public:
 		return destination;
 	}
 
+	double getGrade() const {
+		return grade;
+	}
+
+	String getComment() const {
+		return comment;
+	}
+
 	void readJourney() {
 		cout << "Enter your destination:" << endl;
 		cin >> destination;
