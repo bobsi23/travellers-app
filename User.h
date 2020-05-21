@@ -34,7 +34,7 @@ public:
 		journeyList = DynArray<Journey>();
 	}
 
-	
+
 	String getFriend(int i) const {
 		return friendsList[i];
 	}
@@ -67,6 +67,16 @@ public:
 	bool hasUsernameAndPassword(const String& _username, const String& _password) const {
 		return username == _username && password == _password;
 	}
+
+
+	Journey* findJourneyByDestination(const String& destination) const {
+		for (int i = 0; i < journeyList.getSize(); ++i) {
+			if (journeyList[i].getDestination() == destination) {
+				return &(journeyList[i]);
+			}
+		}
+		return nullptr;
+    }
 
 
 	bool hasFriend(const String& friendUsername) const {
